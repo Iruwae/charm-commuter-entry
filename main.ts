@@ -1,12 +1,14 @@
-import * as fs from "node:fs";
-import * as path from "node:path";
-
-const line =
-  "Talverin: brisk 11\u00B0C wind rattling tram wires, then afternoon sun gilding the bridges \u2014 scarves on, commuters, the cold is only showing off.";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR;
 if (!outDir) {
   throw new Error("MAKEFUN_OUTPUT_DIR is not set");
 }
-fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, "entry.txt"), line, "utf8");
+
+mkdirSync(outDir, { recursive: true });
+
+const line =
+  "Mirell: gale-force winds all afternoon — the washing on every line in Old Town has officially emigrated.";
+
+writeFileSync(join(outDir, "entry.txt"), line + "\n", "utf8");

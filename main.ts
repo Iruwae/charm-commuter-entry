@@ -1,14 +1,10 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR;
-if (!outDir) {
-  throw new Error("MAKEFUN_OUTPUT_DIR is not set");
-}
+// Read the entry text shipped next to this file, byte for byte.
+const data = readFileSync(new URL("./entry.txt", import.meta.url));
 
+// Write the exact bytes to $OUTPUT_DIR/entry.txt (default "/output").
+const outDir = process.env.OUTPUT_DIR || "/output";
 mkdirSync(outDir, { recursive: true });
-
-const line =
-  "Mirell: gale-force winds all afternoon — the washing on every line in Old Town has officially emigrated.";
-
-writeFileSync(join(outDir, "entry.txt"), line + "\n", "utf8");
+writeFileSync(join(outDir, "entry.txt"), data);
